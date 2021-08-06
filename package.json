@@ -21,6 +21,7 @@
     "@angular/router": "~12.2.0",
     "angularx-social-login": "^4.0.1",
     "apexcharts": "^3.27.3",
+    "jwt-decode": "^3.1.2",
     "ng-apexcharts": "^1.5.12",
     "ngx-currency": "^2.5.2",
     "rxjs": "~6.6.0",
