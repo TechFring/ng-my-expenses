@@ -1,0 +1,38 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin-bottom: 8px;
+  }
+
+  button {
+    align-self: center;
+  }
+}
+
+.chart {
+  margin-left: -14px;
+}
+.today {
+  margin-top: 16px;
+}
+
+.yesterday {
+  margin-top: 32px;
+  
+  ul.list {
+    overflow-y: auto;
+    max-height: 174px;
+  }
+}
+
+hr {
+  margin-bottom: 8px;
+}

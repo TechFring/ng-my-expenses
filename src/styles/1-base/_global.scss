@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline;
+  list-style: none;
+  border: 0;
+  color: map-get($black, 100);
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+hr {
+  border: 1px solid map-get($grey, 100);
+  margin: 6px 0px;
+}
+
+a, img, button {
+  @extend %no-select;
+}

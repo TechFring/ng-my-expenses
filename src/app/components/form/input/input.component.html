@@ -1,0 +1,31 @@
+<div class="form-group">
+  <div class="form-field">
+    <input
+      *ngIf="type !== 'currency'"
+      placeholder=" "
+      [formControl]="control"
+      [type]="type"
+      [ngClass]="formService.isValidField(control) && 'invalid'"
+    />
+
+    <input
+      *ngIf="type === 'currency'"
+      placeholder=" "
+      [formControl]="control"
+      type="text"
+      currencyMask
+      [options]="currencyOptions"
+      [ngClass]="formService.isValidField(control) && 'invalid'"
+    />
+
+    <label>{{ label }}</label>
+  </div>
+
+  <span
+    class="input-error"
+    *ngIf="formService.isValidField(control)"
+    @fadeInOut
+  >
+    Campo obrigatório
+  </span>
+</div>

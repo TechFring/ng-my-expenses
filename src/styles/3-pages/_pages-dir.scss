@@ -1,0 +1,25 @@
+.container {
+  height: 100%;
+  border-radius: 30px;
+  background: map-get($white, 100);
+}
+
+.view-content {
+  height: 100%;
+  width: 100%;
+
+  overflow-y: auto;
+  padding: 56px 56px 32px;
+}
+
+.home-main {
+  display: flex;
+  padding: 0px 35px;
+  min-height: calc(100vh - 60px);
+
+  @media (max-width: 650px) {
+    & {
+      padding: 0px 16px;
+    }
+  }
+}

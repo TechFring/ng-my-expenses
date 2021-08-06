@@ -1,0 +1,118 @@
+$orange: (
+  100: #fff3e5,
+  200: #ffe7cc,
+  300: #ffdab2,
+  400: #ffce99,
+  500: #ffc27f,
+  600: #ffb666,
+  700: #ffaa4c,
+  800: #ff9e32,
+  900: #ff9219,
+);
+
+$purple: (
+  100: #e0e2ff,
+  200: #c7cafe,
+  300: #aeb3fe,
+  400: #959bfd,
+  500: #7c83fd,
+  600: #636bfd,
+  700: #4a53fc,
+  800: #313cfc,
+  900: #1824fb,
+);
+
+$blue: (
+  100: #e3ecff,
+  200: #c9dcff,
+  300: #b0cbff,
+  400: #96baff,
+  500: #7da9ff,
+  600: #6398ff,
+  700: #4a88ff,
+  800: #3077ff,
+  900: #1766ff,
+);
+
+$red: (
+  100: #fdddd8,
+  200: #fcc7c0,
+  300: #fab2a8,
+  400: #f99c90,
+  500: #f88777,
+  600: #f6715f,
+  700: #f55c47,
+  800: #f4472f,
+  900: #f23117,
+);
+
+$black: (
+  100: #313131,
+  200: #242424,
+  300: #171717,
+);
+
+$grey: (
+  100: #ebebeb,
+  200: #dedede,
+  300: #d1d1d1,
+  400: #c4c4c4,
+  500: #b8b8b8,
+  600: #ababab,
+  700: #9e9e9e,
+  800: #919191,
+  900: #858585,
+);
+
+$green: (
+  100: #e9fbec,
+  200: #d4f7da,
+  300: #bef3c7,
+  400: #a9efb5,
+  500: #93eba2,
+  600: #7ee790,
+  700: #68e37d,
+  800: #52df6a,
+  900: #3ddb58,
+);
+
+$white: (
+  100: #fff,
+);
+
+$pallete: (
+  primary: (
+    100: map-get($blue, 600),
+    200: map-get($blue, 700),
+    300: map-get($blue, 800),
+  ),
+  dark: (
+    100: map-get($black, 100),
+    200: map-get($black, 200),
+    300: map-get($black, 300),
+  ),
+  secondary: (),
+  warning: (
+    100: map-get($orange, 600),
+    200: map-get($orange, 700),
+    300: map-get($orange, 800),
+  ),
+  danger: (
+    100: map-get($red, 600),
+    200: map-get($red, 700),
+    300: map-get($red, 800),
+  ),
+  success: (
+    100: map-get($green, 600),
+    200: map-get($green, 700),
+    300: map-get($green, 800),
+  ),
+  grey: (
+    100: map-get($grey, 100),
+    200: map-get($grey, 200),
+    300: map-get($grey, 300),
+  ),
+  white: (
+    100: map-get($white, 100),
+  ),
+);

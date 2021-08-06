@@ -1,0 +1,25 @@
+@import "../../../styles/styles.scss";
+
+.app {
+  height: 100vh;
+  background: map-get($black, 300);
+  display: flex;
+}
+
+main {
+  flex: 1;
+  padding: 10px 10px 10px 0px;
+}
+
+.container {
+  border-radius: 30px;
+  display: flex;
+}
+
+.where-your-money-go {
+  margin-left: auto;
+}
+
+.router {
+  width: 100%;
+}

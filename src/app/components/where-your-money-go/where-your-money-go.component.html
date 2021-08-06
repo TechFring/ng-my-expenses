@@ -1,0 +1,31 @@
+<div class="section" #app>
+  <h3>Where your money go?</h3>
+
+  <div class="chart">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [grid]="chartOptions.grid"
+      [dataLabels]="chartOptions.dataLabels"
+      [plotOptions]="chartOptions.plotOptions"
+      [colors]="chartOptions.colors"
+      ></apx-chart>
+  </div>
+
+  <div class="developer-contact">
+    <img src="./assets/images/github.png" />
+
+    <a href="https://github.com/TechFring" target="_blank">
+      <button class="btn-dark">View Code</button>
+    </a>
+
+    <a
+      href="https://www.linkedin.com/in/danilo-miranda-877851135/"
+      target="_blank"
+    >
+      <button class="btn-dark">Developer Contact</button>
+    </a>
+  </div>
+</div>

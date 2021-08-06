@@ -1,0 +1,24 @@
+<div class="form-group">
+  <div class="form-field">
+    <select
+      [formControl]="control"
+      [ngClass]="formService.isValidField(control) && 'invalid'"
+    >
+      <option value="" hidden>Select a option</option>
+
+      <option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+
+    <label>Type</label>
+  </div>
+
+  <span
+    class="input-error"
+    *ngIf="formService.isValidField(control)"
+    @fadeInOut
+  >
+    Campo obrigatório
+  </span>
+</div>

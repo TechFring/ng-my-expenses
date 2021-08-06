@@ -1,0 +1,37 @@
+<div class="view-content">
+  <h1>{{ isEdit ? "Edit Expense" : "New Expense" }}</h1>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <app-select
+      [control]="formGroup.get('type')"
+      [options]="expenseTypes"
+    ></app-select>
+
+    <app-input
+      [type]="'datetime-local'"
+      [label]="'Date time'"
+      [control]="formGroup.get('datetime')"
+    ></app-input>
+
+    <app-input
+      [type]="'currency'"
+      [label]="'Value'"
+      [control]="formGroup.get('value')"
+    ></app-input>
+
+    <app-textarea
+      [label]="'Description'"
+      [control]="formGroup.get('description')"
+    ></app-textarea>
+
+    <div class="form-buttons">
+      <a routerLink="/expenses">
+        <button class="btn-primary-outline" type="button">Back</button>
+      </a>
+
+      <button class="btn-primary" type="submit" [disabled]="!formGroup.valid">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,32 @@
+<aside class="sidebar">
+  <div class="header">
+    <img
+      alt="Avatar"
+      src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
+    />
+
+    <h2>First Name</h2>
+
+    <p>email@email.com</p>
+  </div>
+
+  <nav class="navigation">
+    <ul>
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      </li>
+
+      <li>
+        <a routerLink="/expenses" routerLinkActive="active">Expenses</a>
+      </li>
+
+      <li>
+        <a routerLink="/settings" routerLinkActive="active">Settings</a>
+      </li>
+
+      <li>
+        <a (click)="authService.logout()">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</aside>

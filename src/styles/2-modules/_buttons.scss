@@ -1,0 +1,31 @@
+.btn-success {
+  @include button(success, white);
+}
+
+.btn-danger {
+  @include button(danger, white);
+}
+
+.btn-warning {
+  @include button(warning, dark);
+}
+
+.btn-dark {
+  @include button(dark, white);
+}
+
+.btn-primary {
+  @include button(primary, white);
+}
+
+.btn-primary-outline {
+  @include button-outline(primary);
+}
+
+.btn-floating-grey {
+  @include button-floating(grey, dark);
+}
+
+// .btn-secondary {
+//   @include button(secondary, white);
+// }

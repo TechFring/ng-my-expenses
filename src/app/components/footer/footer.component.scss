@@ -1,0 +1,42 @@
+@import "../../../styles/styles.scss";
+
+.footer {
+  padding: 45px 30px;
+  width: 100%;
+  background: map-get($black, 200);
+
+  display: flex;
+  justify-content: space-between;
+
+  * {
+    color: map-get($grey, 600);
+  }
+
+  h3 {
+    text-align: center;
+  }
+  
+  a:first-child {
+    align-self: flex-start;
+  }
+
+  @media (max-width: 650px) {
+    & {
+      padding: 45px 16px;
+    }
+  }
+}
+
+.developer-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  * {
+    line-height: 1.5;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

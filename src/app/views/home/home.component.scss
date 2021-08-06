@@ -1,0 +1,17 @@
+@import "../../../styles/styles.scss";
+
+h1 {
+  font-size: 3.5rem;
+}
+
+p {
+  color: map-get($grey, 900);
+  margin: 16px 0px 32px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.btn-primary {
+  align-self: flex-start;
+  padding: 15px 30px;
+}

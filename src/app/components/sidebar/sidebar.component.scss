@@ -1,0 +1,46 @@
+@import "../../../styles/styles.scss";
+
+.sidebar {
+  height: 100%;
+  width: 240px;
+  padding: 50px;
+  background: map-get($black, 300);
+}
+
+.header {
+  img {
+    width: 55px;
+    height: 55px;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  h2 {
+    margin: 16px 0px 8px;
+    color: map-get($white, 100);
+  }
+
+  p {
+    color: map-get($grey, 600);
+  }
+}
+
+.navigation {
+  margin-top: 80px;
+
+  li + li {
+    margin-top: 24px;
+  }
+
+  a {
+    font-size: 1.1rem;
+    color: map-get($grey, 600);
+    transition: all 0.1s;
+  }
+
+  a.active,
+  a:hover {
+    color: map-get($white, 100);
+  }
+}

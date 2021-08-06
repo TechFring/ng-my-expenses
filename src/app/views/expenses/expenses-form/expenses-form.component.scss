@@ -1,0 +1,15 @@
+.view-content {
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  width: 100%;
+  margin: auto;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+}

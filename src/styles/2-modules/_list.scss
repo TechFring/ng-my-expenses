@@ -1,0 +1,51 @@
+ul.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  
+  li {
+    width: 100%;
+  }
+  
+  a {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    transition: all 0.1s;
+  }
+
+  a:hover {
+    background: map-get($grey, 100);
+    transform: scale(0.98);
+  }
+
+  i {
+    padding: 12px;
+    border-radius: 100%;
+    color: map-get($white, 100);
+  }
+
+  i.fa-shopping-cart {
+    background: map-get($blue, 700);
+  }
+
+  i.fa-bus {
+    background: map-get($purple, 700);
+  }
+
+  i.fa-home {
+    background: map-get($orange, 700);
+  }
+
+  .list-value {
+    margin-left: auto;
+  }
+}
+
+ul.list .list-content {
+  margin-left: 16px;
+
+  p {
+    margin-top: 4px;
+  }
+}
