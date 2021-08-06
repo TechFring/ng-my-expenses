@@ -36,7 +36,7 @@ export class AuthService {
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((data: SocialUser) => {
         const user: User = {
-          id: data.id,
+          username: data.id,
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
