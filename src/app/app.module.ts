@@ -67,7 +67,7 @@ import { FormatMonthPipe } from './pipes/format-month.pipe';
 
     NgApexchartsModule,
     NgxCurrencyModule,
-    // SocialLoginModule,
+    SocialLoginModule,
 
     BrowserAnimationsModule,
   ],

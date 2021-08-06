@@ -5,9 +5,7 @@
 
   <p>Please click the button below</p>
 
-  <a routerLink="/expenses">
-    <button class="btn-primary">
-      <i class="fab fa-google"></i>&nbsp;&nbsp; Continue with Google
-    </button>
-  </a>
+  <button class="btn-primary" (click)="authService.login()">
+    <i class="fab fa-google"></i>&nbsp;&nbsp; Continue with Google
+  </button>
 </div>

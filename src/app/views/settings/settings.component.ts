@@ -5,15 +5,10 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
+  constructor(public userService: UserService) {}
 
-  constructor(
-    public userService: UserService
-  ) { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

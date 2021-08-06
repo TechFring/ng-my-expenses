@@ -3,7 +3,7 @@
 .sidebar {
   height: 100%;
   width: 240px;
-  padding: 50px;
+  padding: 50px 45px;
   background: map-get($black, 300);
 }
 
@@ -23,6 +23,7 @@
 
   p {
     color: map-get($grey, 600);
+    word-break: break-all;
   }
 }
 
