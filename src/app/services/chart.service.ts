@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ChartOptions } from 'src/app/models/chart';
+import { IChartOptions } from 'src/app/models/chart';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +8,8 @@ import { ChartOptions } from 'src/app/models/chart';
 export class ChartService {
   constructor() {}
 
-  public getBase(): ChartOptions {
-    const base: ChartOptions = {
+  public getBase(): IChartOptions {
+    const base: IChartOptions = {
       colors: [],
       chart: {
         type: 'bar',

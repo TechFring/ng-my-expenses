@@ -3,15 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 // 3rd Party
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgxCurrencyModule } from 'ngx-currency';
-import {
-  SocialLoginModule,
-  SocialAuthServiceConfig,
-  GoogleLoginProvider,
-} from 'angularx-social-login';
+import { SocialLoginModule } from 'angularx-social-login';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -40,6 +37,10 @@ import { FooterComponent } from './components/footer/footer.component';
 // Pipes
 import { FormatMonthPipe } from './pipes/format-month.pipe';
 
+// Providers
+import { httpInterceptorProviders } from './providers/http-interceptors';
+import { socialAuthProviders } from './providers/social-auth/index';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { FormatMonthPipe } from './pipes/format-month.pipe';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    HttpClientModule,
 
     NgApexchartsModule,
     NgxCurrencyModule,
@@ -71,22 +73,7 @@ import { FormatMonthPipe } from './pipes/format-month.pipe';
 
     BrowserAnimationsModule,
   ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '491837092561-ak236loph6jtnf0beh307e2724feq2s1.apps.googleusercontent.com'
-            ),
-          },
-        ],
-      } as SocialAuthServiceConfig,
-    },
-  ],
+  providers: [socialAuthProviders, httpInterceptorProviders],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

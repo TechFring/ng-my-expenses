@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/user';
+import { IUser } from 'src/app/models/user';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +9,7 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  public user: User;
+  public user: IUser;
 
   constructor(public authService: AuthService) {}
 

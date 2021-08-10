@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { IExpenseHome, EnumExpense } from 'src/app/models/expense';
-import { ChartOptions } from 'src/app/models/chart';
+import { IChartOptions } from 'src/app/models/chart';
 import { ChartService } from 'src/app/services/chart.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 
@@ -12,7 +12,7 @@ import { ExpenseService } from 'src/app/services/expense.service';
 })
 export class ExpensesHomeComponent implements OnInit {
   public expenses: IExpenseHome[];
-  public chartMonthOptions: ChartOptions;
+  public chartMonthOptions: IChartOptions;
 
   public yesterday: Date;
   public currDate: Date;

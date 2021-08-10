@@ -8,7 +8,7 @@ import {
   ApexYAxis,
 } from 'ng-apexcharts';
 
-export type ChartOptions = {
+export type IChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   dataLabels: ApexDataLabels;
