@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import {
   GoogleLoginProvider,
@@ -10,8 +10,8 @@ import {
 } from 'angularx-social-login';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 
-import { IUser } from 'src/app/models/user';
-import { IAuthUser } from 'src/app/models/auth';
+import { IUser } from 'src/app/models/user.model';
+import { IAuthUser } from 'src/app/models/auth.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -22,9 +22,9 @@ export class AuthService {
   private _user: BehaviorSubject<IUser>;
 
   constructor(
-    private http: HttpClient,
-    private router: Router,
-    private socialAuthService: SocialAuthService
+    private _http: HttpClient,
+    private _router: Router,
+    private _socialAuthService: SocialAuthService
   ) {
     this._user = new BehaviorSubject<IUser>(null);
   }
@@ -33,21 +33,33 @@ export class AuthService {
     return this._user;
   }
 
-  public getToken(): string {
-    const token: string = window.localStorage.getItem('@me/token');
-    return token;
+  private _apiLogin(user: IUser): void {
+    const url: string = `${this.BASE_URL}/token/`;
+
+    this._http.post<IAuthUser>(url, user).subscribe(
+      (authUser) => {
+        const { token, ...user } = authUser;
+
+        this.setToken(token);
+        this.setOrRefreshAuthUser(user);
+        this._router.navigate(['expenses']);
+      },
+      () => {
+        this._router.navigate(['login']);
+      }
+    );
   }
 
   private _getTokenExpirationDate(token: string): Date {
     const decoded: JwtPayload = jwt_decode(token);
-
-    if (decoded === undefined) {
-      return null;
-    }
-
     const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;
+  }
+
+  public getToken(): string {
+    const token: string = window.localStorage.getItem('@me/token');
+    return token;
   }
 
   public setToken(token: string): void {
@@ -60,7 +72,7 @@ export class AuthService {
     } else {
       const url: string = `${this.BASE_URL}/user/`;
 
-      this.http.get<IUser>(url).subscribe((user) => {
+      this._http.get<IUser>(url).subscribe((user) => {
         this._user.next(user);
       });
     }
@@ -68,19 +80,18 @@ export class AuthService {
 
   public isLoggedIn(): boolean {
     const token: string = this.getToken();
-    const date = this._getTokenExpirationDate(token);
-    const isTokenExpired: boolean = !(date.valueOf() > new Date().valueOf());
 
-    if (!token || isTokenExpired) {
-      this.logout();
-      return false;
+    if (token) {
+      const date: Date = this._getTokenExpirationDate(token);
+      const isTokenExpired: boolean = !(date.valueOf() > new Date().valueOf());
+      return !isTokenExpired;
     } else {
-      return true;
+      return false;
     }
   }
 
   public socialLogin(): void {
-    this.socialAuthService
+    this._socialAuthService
       .signIn(GoogleLoginProvider.PROVIDER_ID)
       .then((data: SocialUser) => {
         const user: IUser = {
@@ -100,20 +111,9 @@ export class AuthService {
     window.location.href = '/home';
   }
 
-  private _apiLogin(user: IUser): void {
-    const url: string = `${this.BASE_URL}/token/`;
-
-    this.http.post<IAuthUser>(url, user).subscribe(
-      (authUser) => {
-        const { token, ...user } = authUser;
-
-        this.setToken(token);
-        this.setOrRefreshAuthUser(user);
-        this.router.navigate(['expenses']);
-      },
-      () => {
-        this.router.navigate(['login']);
-      }
-    );
+  public updateSalary(salary: number): Observable<IUser> {
+    const userId: number = this._user.value.id;
+    const url: string = `${this.BASE_URL}/user/${userId}/`;
+    return this._http.patch<IUser>(url, { salary: salary });
   }
 }

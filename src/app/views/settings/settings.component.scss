@@ -1,0 +1,68 @@
+@import "../../../styles/styles.scss";
+
+.view-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-info {
+  position: relative;
+  margin: auto 0px;
+  display: flex;
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+  }
+
+  button.edit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    align-self: flex-start;
+  }
+}
+
+.user-info div {
+  padding: 10px 20px;
+
+  h2 {
+    font-weight: 500;
+  }
+
+  p {
+    margin-top: 6px;
+    word-break: break-all;
+    font-size: 1rem;
+  }
+
+  i {
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 650px) {
+  .user-info {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+
+    div {
+      padding: initial;
+      padding-top: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    button.edit {
+      top: initial;
+      bottom: 0;
+      right: calc(50% - 14px);
+      align-self: flex-end;
+    }
+  }
+}

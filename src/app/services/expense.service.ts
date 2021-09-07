@@ -1,73 +1,118 @@
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Observable, BehaviorSubject, EMPTY } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
-import { TExpenseType, IExpenseService } from 'src/app/models/expense';
+import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/services/utils.service';
+import { IDictExpense, IExpense, IReadExpense } from 'src/app/models/expense.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpenseService {
-  private _expenses: BehaviorSubject<IExpenseService[]>;
-  private _expenseTypes: BehaviorSubject<TExpenseType[]>;
+  private readonly BASE_URL: string = `${environment.api}/expense/`;
+  private _expenses: BehaviorSubject<IExpense[]>;
 
-  constructor() {
-    const expenses: IExpenseService[] = [
-      {
-        id: 1,
-        type: 'Grocery',
-        description: 'Belanja di pasar',
-        datetime: '2021-08-03 11:42:00',
-        value: 326.8,
-      },
-      {
-        id: 2,
-        type: 'Transportation',
-        description: 'Belanja di pasar',
-        datetime: '2021-08-03 11:42:00',
-        value: 15.0,
-      },
-      {
-        id: 3,
-        type: 'Housing',
-        description: 'Bayar Listrik',
-        datetime: '2021-08-03 11:42:00',
-        value: 185.75,
-      },
-    ];
-
-    const expenseTypes: TExpenseType[] = [
-      'Grocery',
-      'Housing',
-      'Transportation',
-    ];
-
-    this._expenses = new BehaviorSubject<IExpenseService[]>(expenses);
-    this._expenseTypes = new BehaviorSubject<TExpenseType[]>(expenseTypes);
+  constructor(private _http: HttpClient, private _utilsService: UtilsService) {
+    this._expenses = new BehaviorSubject<IExpense[]>(null);
+    this.refreshExpenseList();
   }
 
-  get expenses(): BehaviorSubject<IExpenseService[]> {
+  get expenses(): BehaviorSubject<IExpense[]> {
     return this._expenses;
   }
 
-  get expenseTypes(): BehaviorSubject<TExpenseType[]> {
-    return this._expenseTypes;
-  }
-
-  public formatDetails(expense: IExpenseService): string {
-    const datePipe = new DatePipe('en-us');
-    const shortTime = datePipe.transform(expense.datetime, 'shortTime');
-
+  private _formatDetails(expense: IExpense): string {
+    const format: string = 'shortTime';
+    const shortTime = this._utilsService.formatDate(expense.datetime, format);
     return `${shortTime} • ${expense.description}`;
   }
 
-  public getExpenseById(expenseId: number): IExpenseService {
-    let filtered: IExpenseService;
+  public refreshExpenseList(): void {
+    const format = 'yyyy-MM';
+    const datetime = new Date().toISOString();
+    const datemonth = this._utilsService.formatDate(datetime, format);
 
-    this._expenses.forEach((expenses) => {
-      filtered = expenses.filter((expense) => expense.id === expenseId)[0];
+    this.list(datemonth).subscribe((expenses) => {
+      this._expenses.next(expenses);
+    });
+  }
+
+  public list(datemonth?: string): Observable<IExpense[]> {
+    let url: string = this.BASE_URL;
+
+    if (datemonth) {
+      url += `?date=${datemonth}`;
+    }
+
+    return this._http.get<IExpense[]>(url);
+  }
+
+  public retrieve(expenseId: number): Observable<IExpense> {
+    const url: string = this.BASE_URL + expenseId + '/';
+    return this._http.get<IExpense>(url).pipe(
+      map((res) => res),
+      catchError(() => {
+        window.location.href = '/expenses';
+        return EMPTY;
+      })
+    );
+  }
+
+  public create(expense): Observable<IExpense> {
+    return this._http.post<IExpense>(this.BASE_URL, expense).pipe(
+      map((res) => {
+        this.refreshExpenseList();
+        return res;
+      })
+    );
+  }
+
+  public update(expense): Observable<IExpense> {
+    const url: string = this.BASE_URL + expense.id + '/';
+    return this._http.patch<IExpense>(url, expense).pipe(
+      map((res) => {
+        this.refreshExpenseList();
+        return res;
+      })
+    );
+  }
+
+  public destroy(expenseId: number): Observable<IExpense> {
+    const url: string = this.BASE_URL + expenseId + '/';
+    return this._http.delete<IExpense>(url).pipe(
+      map((res) => {
+        this.refreshExpenseList();
+        return res;
+      })
+    );
+  }
+
+  public handleDictExpense(expenses: IExpense[]): IDictExpense {
+    if (expenses === null) return;
+
+    const dict: IDictExpense = {};
+
+    expenses.forEach((e) => {
+      const { datetime, ...expense } = e;
+
+      const readExpense: IReadExpense = {
+        ...expense,
+        details: this._formatDetails(e),
+      };
+
+      const format: string = 'yyyy-MM-dd';
+      const date: string = this._utilsService.formatDate(datetime, format);
+      const isInstance: boolean = dict[date] instanceof Array;
+
+      if (!isInstance) {
+        dict[date] = [];
+      }
+
+      dict[date].push(readExpense);
     });
 
-    return filtered;
+    return dict;
   }
 }

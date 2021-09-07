@@ -1,28 +1,38 @@
-<div class="view-content">
-    
-  <button class="btn-danger" (click)="userService.walletStatus.next('danger')">
-    Danger
-  </button>
+<div class="view-content" *ngIf="user">
+  <h1>Settings</h1>
 
-  <button class="btn-warning" (click)="userService.walletStatus.next('warning')">
-    Warning
-  </button>
+  <div class="user-info">
+    <img [src]="user.photo_url" [alt]="user.first_name" />
 
-  <button class="btn-success" (click)="userService.walletStatus.next('success')">
-    Success
-  </button>
+    <div>
+      <h2>{{ user.first_name }}&nbsp;{{ user.last_name }}</h2>
 
-  <form>
-    <div class="form-field">
-      <input type="text" placeholder=" " />
-      <label>Nome</label>
+      <p class="muted"><i class="fas fa-envelope"></i>{{ user.email }}</p>
+
+      <ng-container *ngIf="isEdit; then input; else salary"></ng-container>
+
+      <ng-template #input>
+        <p>
+          <i class="fas fa-wallet"></i>
+          <input
+            class="input-salary"
+            type="text"
+            [formControl]="controlSalary"
+            currencyMask
+            [options]="currencyOptions"
+          />
+        </p>
+      </ng-template>
+
+      <ng-template #salary>
+        <p class="muted">
+          <i class="fas fa-wallet"></i>{{ user.salary | currency }}
+        </p>
+      </ng-template>
     </div>
 
-    <div class="form-field">
-      <input type="text" placeholder=" " />
-      <label>Nome</label>
-    </div>
-  </form>
-
-
+    <button class="btn-floating-grey edit" (click)="onClickBtnEdit()">
+      <i [class]="isEdit ? 'fas fa-check' : 'fas fa-edit'"></i>
+    </button>
+  </div>
 </div>

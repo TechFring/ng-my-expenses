@@ -23,3 +23,34 @@ main {
 .router {
   width: 100%;
 }
+
+.navbar button {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  main {
+    padding: 56px 0px 0px;
+  }
+
+  .container {
+    border-radius: 0px;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: map-get($black, 300);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+
+    button {
+      display: block;
+    }
+  }
+}

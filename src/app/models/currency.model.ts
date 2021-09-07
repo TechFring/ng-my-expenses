@@ -1,4 +1,4 @@
-export interface CurrencyOptions {
+export interface ICurrencyOptions {
   align: string;
   allowNegative: boolean;
   decimal: string;

@@ -1,14 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { UtilsService } from 'src/app/services/utils.service';
+
 @Pipe({
   name: 'formatMonth',
 })
 export class FormatMonthPipe implements PipeTransform {
+  constructor(
+    private _utilsService: UtilsService
+  ) {}
+
   transform(date: Date): string {
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
+    const totalDaysMonth = this._utilsService.getTotalDaysMonth(date);
     const monthName = date.toLocaleString('en-US', { month: 'long' });
-    const totalDaysMonth = new Date(year, month, 0).getDate();
+    const year = date.getFullYear();
 
     return `1 - ${totalDaysMonth} ${monthName}, ${year}`;
   }

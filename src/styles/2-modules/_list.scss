@@ -2,11 +2,11 @@ ul.list {
   display: flex;
   flex-direction: column;
   list-style: none;
-  
+
   li {
     width: 100%;
   }
-  
+
   a {
     display: flex;
     align-items: center;
@@ -20,32 +20,35 @@ ul.list {
   }
 
   i {
-    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    width: 38px;
     border-radius: 100%;
     color: map-get($white, 100);
   }
 
-  i.fa-shopping-cart {
-    background: map-get($blue, 700);
-  }
-
-  i.fa-bus {
-    background: map-get($purple, 700);
-  }
-
-  i.fa-home {
-    background: map-get($orange, 700);
-  }
-
   .list-value {
     margin-left: auto;
+    padding-left: 12px;
   }
 }
 
-ul.list .list-content {
+.list-content {
   margin-left: 16px;
 
   p {
     margin-top: 4px;
+    max-width: 50ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 650px) {
+  .list-content p {
+    max-width: 20ch;
   }
 }

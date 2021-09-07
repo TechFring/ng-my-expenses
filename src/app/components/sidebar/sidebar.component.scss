@@ -45,3 +45,28 @@
     color: map-get($white, 100);
   }
 }
+
+.btn-toggle {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .sidebar {
+    z-index: 100;
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin-left: -240px;
+    transition: margin-left 0.2s;
+    padding: 16px;
+  }
+  
+  .sidebar.show {
+    margin-left: 0px;
+  }
+  
+  .btn-toggle {
+    display: block;
+    margin-bottom: 32px;
+  }
+}

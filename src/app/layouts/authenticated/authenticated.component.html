@@ -1,5 +1,18 @@
 <div class="app">
-  <app-sidebar></app-sidebar>
+  <nav class="navbar">
+    <button class="btn-toggle">
+      <i class="fas fa-bars" (click)="childSidebar.onClickBtnToggle()"></i>
+    </button>
+
+    <button
+      class="btn-toggle"
+      (click)="childWhereYourMoneyGo.onClickBtnToggle()"
+    >
+      <i class="far fa-chart-bar"></i>
+    </button>
+  </nav>
+
+  <app-sidebar class="sidebar"></app-sidebar>
 
   <main>
     <div class="container">

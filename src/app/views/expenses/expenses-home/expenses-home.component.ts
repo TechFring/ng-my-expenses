@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IExpenseHome, EnumExpense } from 'src/app/models/expense';
-import { IChartOptions } from 'src/app/models/chart';
+import { IDictExpense } from 'src/app/models/expense.model';
+import { IChartOptions } from 'src/app/models/chart.model';
 import { ChartService } from 'src/app/services/chart.service';
 import { ExpenseService } from 'src/app/services/expense.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-expenses',
@@ -11,58 +12,38 @@ import { ExpenseService } from 'src/app/services/expense.service';
   styleUrls: ['./expenses-home.component.scss'],
 })
 export class ExpensesHomeComponent implements OnInit {
-  public expenses: IExpenseHome[];
-  public chartMonthOptions: IChartOptions;
-
-  public yesterday: Date;
+  public chartOptions: IChartOptions;
+  public dictExpense: IDictExpense;
   public currDate: Date;
 
   constructor(
-    private chartService: ChartService,
-    private expenseService: ExpenseService
+    private _chartService: ChartService,
+    private _expenseService: ExpenseService,
+    public utilsService: UtilsService
   ) {
-    const currDate = new Date();
-    const yesterday = new Date(
-      currDate.getFullYear(),
-      currDate.getMonth(),
-      currDate.getDate() - 1
-    );
-
-    this.currDate = currDate;
-    this.yesterday = yesterday;
-
-    this.setChartMonthOptions();
-    this.observeExpenses();
-    this.expenseService.getExpenseById(1);
+    this.currDate = new Date();
+    this._subscribers();
   }
 
   ngOnInit(): void {}
 
-  private setChartMonthOptions(): void {
-    const seriesData = [];
-
-    for (let i = 1; i <= 31; i++) {
-      seriesData.push(1000);
-    }
-
-    this.chartMonthOptions = this.chartService.getBase();
-    this.chartMonthOptions.chart.height = 150;
-    this.chartMonthOptions.series = [{ name: 'spend', data: seriesData }];
+  private _subscribers(): void {
+    this._subscribeExpenses();
   }
 
-  private observeExpenses(): void {
-    this.expenseService.expenses.subscribe((expenses) => {
-      this.expenses = expenses.map((e) => {
-        const expense: IExpenseHome = {
-          id: e.id,
-          type: e.type,
-          icon: EnumExpense[e.type],
-          details: this.expenseService.formatDetails(e),
-          value: e.value,
-        };
+  private _subscribeExpenses(): void {
+    this._expenseService.expenses.subscribe((expenses) => {
+      const dictExpense = this._expenseService.handleDictExpense(expenses);
+      const seriesData = this._chartService.formatHomeChartData(dictExpense);
 
-        return expense;
-      });
+      this.dictExpense = dictExpense;
+      this._setChartOptions(seriesData);
     });
+  }
+
+  private _setChartOptions(seriesData: number[]): void {
+    this.chartOptions = this._chartService.getBase();
+    this.chartOptions.chart.height = 150;
+    this.chartOptions.series[0] = { name: 'value', data: seriesData };
   }
 }

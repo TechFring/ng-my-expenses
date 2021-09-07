@@ -2,24 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { fadeInOut } from 'src/app/animations';
-import { FormService } from 'src/app/services/form.service';
+import { ICategory } from 'src/app/models/category.model';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  animations: [fadeInOut]
+  animations: [fadeInOut],
 })
 export class SelectComponent implements OnInit {
   @Input() label: string;
   @Input() control: FormControl;
-  @Input() options: string[];
+  @Input() options: ICategory[];
 
-  constructor(
-    public formService: FormService
-  ) { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

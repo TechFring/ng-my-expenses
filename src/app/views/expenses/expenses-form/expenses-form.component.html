@@ -3,8 +3,9 @@
 
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <app-select
-      [control]="formGroup.get('type')"
-      [options]="expenseTypes"
+      [label]="'Category'"
+      [control]="formGroup.get('category')"
+      [options]="categories"
     ></app-select>
 
     <app-input
@@ -25,13 +26,20 @@
     ></app-textarea>
 
     <div class="form-buttons">
+      <button
+        *ngIf="isEdit"
+        class="btn-danger"
+        type="button"
+        (click)="onDelete()"
+      >
+        Delete
+      </button>
+
       <a routerLink="/expenses">
         <button class="btn-primary-outline" type="button">Back</button>
       </a>
 
-      <button class="btn-primary" type="submit" [disabled]="!formGroup.valid">
-        Save
-      </button>
+      <button class="btn-primary" type="submit">Save</button>
     </div>
   </form>
 </div>

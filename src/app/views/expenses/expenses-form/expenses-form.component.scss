@@ -10,6 +10,14 @@ form {
 
 .form-buttons {
   display: flex;
-  justify-content: space-between;
   margin-top: 32px;
+  justify-content: flex-end;
+
+  .btn-danger {
+    margin-right: auto;
+  }
+
+  .btn-primary-outline {
+    margin-right: 8px;
+  }
 }

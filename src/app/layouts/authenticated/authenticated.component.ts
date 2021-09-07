@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import { WhereYourMoneyGoComponent } from 'src/app/components/where-your-money-go/where-your-money-go.component';
 
 @Component({
   selector: 'app-authenticated',
@@ -8,13 +10,16 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./authenticated.component.scss'],
 })
 export class AuthenticatedComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  @ViewChild(SidebarComponent) childSidebar: SidebarComponent;
+  @ViewChild(WhereYourMoneyGoComponent) childWhereYourMoneyGo: WhereYourMoneyGoComponent;
+
+  constructor(private _authService: AuthService) {}
 
   ngOnInit(): void {
-    const userNotDefined: boolean = this.authService.user.value === null;
+    const userNotDefined: boolean = this._authService.user.value === null;
 
     if (userNotDefined) {
-      this.authService.setOrRefreshAuthUser();
+      this._authService.setOrRefreshAuthUser();
     }
   }
 }

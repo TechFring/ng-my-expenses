@@ -1,7 +1,11 @@
-<div class="section" #app>
+<div class="main" #main>
+  <button class="btn-toggle" (click)="onClickBtnToggle()">
+    <i class="fas fa-times"></i>
+  </button>
+
   <h3>Where your money go?</h3>
 
-  <div class="chart">
+  <div class="chart" *ngIf="chartOptions">
     <apx-chart
       [series]="chartOptions.series"
       [chart]="chartOptions.chart"

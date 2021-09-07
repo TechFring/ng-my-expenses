@@ -16,10 +16,14 @@
   display: flex;
   padding: 0px 35px;
   min-height: calc(100vh - 60px);
+}
 
-  @media (max-width: 650px) {
-    & {
-      padding: 0px 16px;
-    }
+@media (max-width: 650px) {
+  .view-content {
+    padding: 32px 16px 0px;
+  }
+
+  .home-main {
+    padding: 0px 16px;
   }
 }

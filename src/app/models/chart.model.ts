@@ -18,3 +18,20 @@ export type IChartOptions = {
   yaxis: ApexYAxis;
   colors: string[];
 };
+
+export interface IChartColor {
+  color: string;
+  bg: string;
+}
+
+export enum EnumChartColor {
+  danger = '#f55c47',
+  warning = '#ffaa4c',
+  success = '#68e37d',
+}
+
+export enum EnumChartBg {
+  danger = '#fdddd8',
+  warning = '#fff3e5',
+  success = '#e9fbec',
+}

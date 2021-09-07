@@ -3,17 +3,9 @@
     <textarea
       placeholder=" "
       [formControl]="control"
-      [ngClass]="formService.isValidField(control) && 'invalid'"
+      maxlength="200"
     ></textarea>
-    
+
     <label>{{ label }}</label>
   </div>
-
-  <span
-    class="input-error"
-    *ngIf="formService.isValidField(control)"
-    @fadeInOut
-  >
-    Campo obrigatório
-  </span>
 </div>

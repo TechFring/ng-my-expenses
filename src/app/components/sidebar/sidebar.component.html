@@ -1,9 +1,10 @@
-<aside class="sidebar">
+<aside class="sidebar" #sidebar>
+  <button class="btn-toggle">
+    <i (click)="onClickBtnToggle()" class="fas fa-bars"></i>
+  </button>
+
   <div class="header" *ngIf="user">
-    <img
-      [alt]="user.first_name"
-      [src]="user.photo_url"
-    />
+    <img [alt]="user.first_name" [src]="user.photo_url" />
 
     <h2>{{ user.first_name }}</h2>
 

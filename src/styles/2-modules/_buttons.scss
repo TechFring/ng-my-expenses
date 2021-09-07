@@ -26,6 +26,13 @@
   @include button-floating(grey, dark);
 }
 
-// .btn-secondary {
-//   @include button(secondary, white);
-// }
+.btn-toggle {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+
+  i {
+    color: map-get($grey, 300);
+    font-size: 1.5rem;
+  }
+}

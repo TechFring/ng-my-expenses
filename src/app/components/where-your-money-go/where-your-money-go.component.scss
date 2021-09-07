@@ -1,20 +1,24 @@
 @import "../../../styles/styles.scss";
 
-.section {
+.main {
   display: flex;
   flex-direction: column;
-
+  
   width: 280px;
   height: 100%;
-
+  
   background: map-get($green, 100);
   border-radius: 0px 30px 30px 0px;
   padding: 56px 32px 32px;
   transition: background 0.2s;
-
+  
   h3 {
     line-height: 2.1rem;
   }
+}
+
+.btn-toggle {
+  display: none;
 }
 
 .developer-contact {
@@ -34,5 +38,43 @@
   button {
     margin-top: 8px;
     width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  .main {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-top: -100vh;
+    z-index: 100;
+    border-radius: 0;
+    padding: 16px;
+    transition: margin-top 0.4s;
+
+    h3 {
+      text-align: center;
+    }
+  }
+
+  .main.show {
+    margin-top: 0vh;
+  }
+
+  .btn-toggle {
+    display: block;
+    align-self: flex-end;
+    margin-bottom: 32px;
+  }
+  
+  .btn-toggle i {
+    color: map-get($black, 200);
+  }
+  
+  .developer-contact {
+    width: 100%;
+    max-width: 300px;
+    align-self: center;
   }
 }

@@ -1,73 +1,69 @@
 <div class="view-content">
-  <div class="main-content">
-    <div class="header">
-      <h1>Expenses</h1>
+  <div class="header">
+    <h1>Expenses</h1>
 
-      <a routerLink="/expenses/new">
-        <button class="btn-floating-grey">
-          <i class="fas fa-plus"></i>
-        </button>
-      </a>
-    </div>
-
-    <p class="muted">{{ currDate | formatMonth }}</p>
-
-    <div class="chart">
-      <apx-chart
-        [series]="chartMonthOptions.series"
-        [chart]="chartMonthOptions.chart"
-        [xaxis]="chartMonthOptions.xaxis"
-        [yaxis]="chartMonthOptions.yaxis"
-        [grid]="chartMonthOptions.grid"
-        [dataLabels]="chartMonthOptions.dataLabels"
-        [plotOptions]="chartMonthOptions.plotOptions"
-      ></apx-chart>
-    </div>
-
-    <div class="today">
-      <h3>Today</h3>
-
-      <hr />
-
-      <ul class="list">
-        <li *ngFor="let expense of expenses">
-          <a routerLink="/expenses/edit/{{ expense.id }}">
-            <i [class]="'fas ' + expense.icon"></i>
-
-            <div class="list-content">
-              <h4>{{ expense.type }}</h4>
-
-              <p class="muted">{{ expense.details }}</p>
-            </div>
-
-            <h4 class="list-value">-{{ expense.value | currency }}</h4>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="yesterday">
-      <!-- <h3>Monday, 23 March 2020</h3> -->
-
-      <h3>{{ yesterday | date: "fullDate" }}</h3>
-
-      <hr />
-
-      <ul class="list">
-        <li *ngFor="let expense of expenses">
-          <a routerLink="/expenses/edit/{{ expense.id }}">
-            <i [class]="'fas ' + expense.icon"></i>
-
-            <div class="list-content">
-              <h4>{{ expense.type }}</h4>
-
-              <p class="muted">{{ expense.details }}</p>
-            </div>
-
-            <h4 class="list-value">-{{ expense.value | currency }}</h4>
-          </a>
-        </li>
-      </ul>
-    </div>
+    <a routerLink="/expenses/new">
+      <button class="btn-floating-grey">
+        <i class="fas fa-plus"></i>
+      </button>
+    </a>
   </div>
+
+  <p class="muted">{{ currDate | formatMonth }}</p>
+
+  <div class="chart" *ngIf="chartOptions">
+    <apx-chart
+      [series]="chartOptions.series"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [grid]="chartOptions.grid"
+      [dataLabels]="chartOptions.dataLabels"
+      [plotOptions]="chartOptions.plotOptions"
+    ></apx-chart>
+  </div>
+
+  <ng-container
+    *ngIf="
+      dictExpense && utilsService.objectIsEmpty(dictExpense);
+      then isEmpty;
+      else expenses
+    "
+  ></ng-container>
+
+  <ng-template #isEmpty>
+    <div class="empty">
+      <img src="./assets/images/empty.svg" />
+    </div>
+  </ng-template>
+
+  <ng-template #expenses>
+    <div
+      class="day"
+      *ngFor="let item of dictExpense | keyvalue: utilsService.keyDescOrder"
+    >
+      <h3>{{ item.key | date: "mediumDate" }}</h3>
+
+      <hr />
+
+      <ul class="list">
+        <li *ngFor="let expense of item.value">
+          <a routerLink="/expenses/edit/{{ expense.id }}">
+            <i
+              [class]="expense.category.icon"
+              [ngStyle]="{ 'background-color': expense.category.color }"
+            ></i>
+
+            <div class="list-content">
+              <h4>{{ expense.category.name }}</h4>
+
+              <p class="muted">{{ expense.details }}</p>
+            </div>
+
+            <h4 class="list-value">-{{ expense.value | currency }}</h4>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </ng-template>
 </div>

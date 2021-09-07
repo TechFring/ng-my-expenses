@@ -1,31 +1,19 @@
 <div class="form-group">
   <div class="form-field">
-    <input
-      *ngIf="type !== 'currency'"
-      placeholder=" "
-      [formControl]="control"
-      [type]="type"
-      [ngClass]="formService.isValidField(control) && 'invalid'"
-    />
+    <ng-container *ngIf="type === 'currency'; else customType">
+      <input
+        placeholder=" "
+        [formControl]="control"
+        type="text"
+        currencyMask
+        [options]="currencyOptions"
+      />
+    </ng-container>
 
-    <input
-      *ngIf="type === 'currency'"
-      placeholder=" "
-      [formControl]="control"
-      type="text"
-      currencyMask
-      [options]="currencyOptions"
-      [ngClass]="formService.isValidField(control) && 'invalid'"
-    />
+    <ng-template #customType>
+      <input placeholder=" " [formControl]="control" [type]="type" />
+    </ng-template>
 
     <label>{{ label }}</label>
   </div>
-
-  <span
-    class="input-error"
-    *ngIf="formService.isValidField(control)"
-    @fadeInOut
-  >
-    Campo obrigatório
-  </span>
 </div>

@@ -51,7 +51,7 @@
 
 .form-field textarea {
   resize: none;
-  height: 100px;
+  height: 140px;
 
   & + label {
     width: calc(100% - 26px);
@@ -60,7 +60,7 @@
   }
 }
 
-.form-field .invalid {
+.form-field .ng-invalid.ng-touched {
   box-shadow: 0 0 0 1px map-get($red, 700);
   border: 1px solid map-get($red, 500);
 }
@@ -72,4 +72,14 @@
 
   color: map-get($red, 700);
   font-size: 0.7rem;
+}
+
+.input-salary {
+  box-shadow: 0 0 0 1px map-get($grey, 200);
+  border-radius: 1px;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+  }
 }

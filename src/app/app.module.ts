@@ -19,6 +19,7 @@ import { AnonymousComponent } from './layouts/anonymous/anonymous.component';
 import { AuthenticatedComponent } from './layouts/authenticated/authenticated.component';
 
 // Views
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ExpensesHomeComponent } from './views/expenses/expenses-home/expenses-home.component';
 import { ExpensesFormComponent } from './views/expenses/expenses-form/expenses-form.component';
 import { SettingsComponent } from './views/settings/settings.component';
@@ -59,6 +60,7 @@ import { socialAuthProviders } from './providers/social-auth/index';
     NavbarComponent,
     LoginComponent,
     FooterComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

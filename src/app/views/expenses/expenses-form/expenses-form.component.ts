@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { TExpenseType } from 'src/app/models/expense';
+import { CategoryService } from 'src/app/services/category.service';
 import { ExpenseService } from 'src/app/services/expense.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import { CurrencyOptions } from 'src/app/models/currency';
+import { IExpense } from 'src/app/models/expense.model';
+import { ICategory } from 'src/app/models/category.model';
+import { ICurrencyOptions } from 'src/app/models/currency.model';
 
 @Component({
   selector: 'app-expenses-form',
@@ -13,59 +15,107 @@ import { CurrencyOptions } from 'src/app/models/currency';
   styleUrls: ['./expenses-form.component.scss'],
 })
 export class ExpensesFormComponent implements OnInit {
-  public currencyOptions: Partial<CurrencyOptions>;
+  public currencyOptions: Partial<ICurrencyOptions>;
   public formGroup: FormGroup;
   public isEdit: boolean;
-  public expenseTypes: TExpenseType[];
+  public categories: ICategory[];
 
   constructor(
-    private route: ActivatedRoute,
-    private expenseService: ExpenseService,
-    private utilsService: UtilsService
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _expenseService: ExpenseService,
+    private _categoryService: CategoryService,
+    private _utilsService: UtilsService
   ) {
-    const expenseId = this.route.snapshot.paramMap.get('id');
+    const expenseId = this._route.snapshot.paramMap.get('id');
 
     this.currencyOptions = { align: 'left' };
     this.isEdit = expenseId != null;
 
     this.formGroup = new FormGroup({
       id: new FormControl('', []),
-      type: new FormControl('', [Validators.required]),
+      category: new FormControl('', [Validators.required]),
       datetime: new FormControl('', [Validators.required]),
       value: new FormControl('', [Validators.required, Validators.min(0.01)]),
       description: new FormControl('', []),
     });
 
-    this.handleIsEdit(+expenseId);
-    this.observeExpenseTypes();
+    this._handleIsEdit(+expenseId);
+    this._subscribers();
   }
 
   ngOnInit(): void {}
 
-  // EVENTS
+  private _subscribers(): void {
+    this._subscribeCategories();
+  }
+
+  private _subscribeCategories(): void {
+    this._categoryService.list().subscribe((categories) => {
+      this.categories = categories;
+    });
+  }
+
+  private _handleIsEdit(expenseId?: number): void {
+    const format: string = 'yyyy-MM-ddTHH:mm';
+
+    if (this.isEdit) {
+      this._expenseService.retrieve(expenseId).subscribe((expense) => {
+        const datetime = this._utilsService.formatDate(
+          expense.datetime,
+          format
+        );
+        const category = expense.category.id;
+        this.formGroup.patchValue({ ...expense, datetime, category });
+      });
+    } else {
+      const currDatetime = new Date().toISOString();
+      const datetime = this._utilsService.formatDate(
+        currDatetime,
+        format,
+        false
+      );
+      this.formGroup.patchValue({ datetime: datetime });
+    }
+  }
+
   public onSubmit(): void {
+    this.formGroup.markAllAsTouched();
+
     if (this.formGroup.valid) {
       this.formGroup.patchValue({
         description: this.formGroup.value['description'].trim(),
       });
+
+      const expense: IExpense = this.formGroup.getRawValue();
+
+      if (this.isEdit) {
+        this._expenseService.update(expense).subscribe(
+          () => {},
+          () => alert('An unexpected error has occurred'),
+          () => this._router.navigate(['expenses'])
+        );
+      } else {
+        this._expenseService.create(expense).subscribe(
+          () => {},
+          () => alert('An unexpected error has occurred'),
+          () => this._router.navigate(['expenses'])
+        );
+      }
     }
   }
 
-  private handleIsEdit(expenseId: number): void {
-    if (this.isEdit) {
-      const expense = this.expenseService.getExpenseById(expenseId);
-      const datetime = this.utilsService.formatDatetime(expense.datetime);
-      this.formGroup.patchValue({ ...expense, datetime });
-    } else {
-      const currDate = new Date().toISOString();
-      const currDateFormatted = this.utilsService.formatDatetime(currDate);
-      this.formGroup.patchValue({ datetime: currDateFormatted });
-    }
-  }
+  public onDelete(): void {
+    const confirmed: boolean = confirm('Confirm deletion');
 
-  private observeExpenseTypes(): void {
-    this.expenseService.expenseTypes.subscribe((types) => {
-      this.expenseTypes = types;
-    });
+    if (confirmed) {
+      const expenseId: number = this.formGroup.value['id'];
+
+      this._expenseService.destroy(expenseId).subscribe(
+        () => {},
+        () => alert('An unexpected error has occurred'),
+        () => this._router.navigate(['expenses'])
+      );
+    }
   }
 }
